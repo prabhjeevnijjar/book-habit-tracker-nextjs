@@ -32,7 +32,7 @@ const LoginPage = () => {
               <span className="text-slate-700">Login with Google</span>
             </button>
             <button
-              className="px-4 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150"
+              className="px-4 py-2 border flex gap-2 border-primaryPurple rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150"
               onClick={() => setStep(2)}
             >
               <span className="text-slate-700">Sign Up</span>
@@ -47,7 +47,7 @@ const LoginPage = () => {
               <h1 className="text-white text-center font-semibold text-4xl">Sign Up</h1>
               <h4 className="text-white text-center">Track, Share, Engage</h4>
             </div>
-            <div className="z-1 rounded-[1.5rem] top-[75%] h-[200px] absolute px-4 bg-white w-[100%]">
+            <div className="z-1 rounded-[1.5rem] top-[75%] h-[500px] absolute px-4 bg-white w-[100%] flex flex-col items-center">
               <div className="grid w-full max-w-sm items-center gap-1.5 z-2 mt-12">
                 <Label htmlFor="name">Name</Label>
                 <Input type="text" id="name" placeholder="Name" />
@@ -68,7 +68,7 @@ const LoginPage = () => {
                 <Label htmlFor="otp">OTP</Label>
                 <Input type="text" id="otp" placeholder="OTP" />
               </div>
-              <Button className="mt-4 px-4">Join</Button>
+              <Button className="mt-4 px-4 bg-primaryPurple w-[100px]">Join</Button>
             </div>
           </div>
         </Fragment>

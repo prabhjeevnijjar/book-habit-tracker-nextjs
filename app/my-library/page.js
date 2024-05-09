@@ -17,7 +17,7 @@ const MyLibraryPage = () => {
       <div className="mx-4">
         <h1 className="text-2xl font-medium mt-4">Collection</h1>
         <div className="flex flex-row justify-start gap-2 mt-2">
-          <Button>Add</Button>
+          <Button className="bg-primaryPurple">Add</Button>
           <Button variant="outline">Search</Button>
           <Button variant="outline">Activity</Button>
         </div>

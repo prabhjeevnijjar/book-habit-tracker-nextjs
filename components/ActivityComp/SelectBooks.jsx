@@ -49,8 +49,7 @@ const SelectBooks = () => {
   ] = useState('');
 
   return (
-    <div className="mx-4 mt-4">
-      <h2 className="text-sm">Select Books You Read Today</h2>
+    <div className="mx-4 my-4 flex flex-nowrap flex-row justify-between">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button variant="outline" role="combobox" aria-expanded={open} className="w-[300px] justify-between">
@@ -80,7 +79,7 @@ const SelectBooks = () => {
           </Command>
         </PopoverContent>
       </Popover>
-      <Button className="my-8">I Read Today :)</Button>
+      <Button className=" bg-primaryPurple">I Read Today :)</Button>
     </div>
   );
 };

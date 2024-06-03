@@ -1,5 +1,6 @@
 import { Roboto } from 'next/font/google';
 import './globals.css';
+import { Toaster } from '@/components/ui/toaster';
 
 const roboto = Roboto({ subsets: ['latin'], display: 'swap', weight: ['100', '400', '500', '900'] });
 
@@ -12,6 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={roboto.className + ' bg-backgroundPeach'}>
+        <Toaster />
         <div className="container mx-auto">{children}</div>
       </body>
     </html>

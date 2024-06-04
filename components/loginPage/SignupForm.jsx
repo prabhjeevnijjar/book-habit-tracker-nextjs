@@ -1,15 +1,18 @@
 'use client';
 
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { sendOtp, verifyOtp } from '@/app/login/actions';
-import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { Button } from '@/components/ui/button';
+import { onChangeHandler } from '@/utils/utils';
 import bookshelfBg from '../../public/static/images/bg-bookshelf.png';
+import Image from 'next/image';
 
 const SignupForm = ({ setStep }) => {
+  const [state, setState] = useState({ name: '', username: '', email: '', otp: '' });
+  const [otpState, setOtpState] = useState(1);
   return (
     <Fragment>
       <div className="relative">
@@ -30,29 +33,22 @@ const SignupForm = ({ setStep }) => {
             </svg>
           </div>
           <div className="flex flex-col w-full max-w-md items-center gap-1.5 z-2 ">
-            <form className="grid w-full max-w-sm items-center gap-1.5 z-2 ">
+            <div className="grid w-full max-w-sm items-center gap-1.5 z-2 mt-3">
+              <Label htmlFor="name">Name</Label>
+              <Input name="name" type="text" id="name" placeholder="Name" required value={state.name || ''} onChange={(e) => onChangeHandler(e, setState, state)} />
+            </div>
+            <div className="grid w-full max-w-sm items-center gap-1.5 z-2 mt-3">
+              <Label htmlFor="email">Email</Label>
+              <Input name="email" type="email" id="email" placeholder="Email" required value={state.email || ''} onChange={(e) => onChangeHandler(e, setState, state)} />
+            </div>
+            <div className="grid w-full max-w-sm items-center gap-1.5 z-2 mt-3">
+              <Label htmlFor="Username">Username</Label>
+              <Input name="username" type="text" id="Username" placeholder="Username" required value={state.username || ''} onChange={(e) => onChangeHandler(e, setState, state)} />
+            </div>
+            {otpState === 2 ? (
               <div className="grid w-full max-w-sm items-center gap-1.5 z-2 mt-3">
-                <Label htmlFor="name">Name</Label>
-                <Input name="name" type="text" id="name" placeholder="Name" required />
-              </div>
-              <div className="grid w-full max-w-md items-center gap-1.5 z-2 mt-4">
-                <Label htmlFor="email">Email</Label>
-                <Input name="email" type="email" id="email" placeholder="Email" required />
-              </div>
-              <div className="grid w-full max-w-sm items-center gap-1.5 z-2 mt-4">
-                <Label htmlFor="Username">Username</Label>
-                <Input name="username" type="text" id="Username" placeholder="Username" required />
-              </div>
-
-              <Button className="mt-4 px-4 bg-primaryPurple w-[100px]" formAction={sendOtp}>
-                <a>Send OTP</a>
-              </Button>
-            </form>
-
-            <form className="grid w-full max-w-sm items-center gap-1.5 z-2">
-              <div className="grid w-full max-w-sm items-center gap-1.5 z-2 mt-4">
                 <Label htmlFor="otpsignup">OTP </Label>
-                <InputOTP maxLength={6} name="otpsignup">
+                <InputOTP maxLength={6} value={state.otp || ''} onChange={(value) => setState({ ...state, otp: value })}>
                   <InputOTPGroup>
                     <InputOTPSlot index={0} />
                     <InputOTPSlot index={1} />
@@ -64,11 +60,21 @@ const SignupForm = ({ setStep }) => {
                     <InputOTPSlot index={5} />
                   </InputOTPGroup>
                 </InputOTP>
-                <Button className="mt-4 px-4 bg-primaryPurple w-[100px]" formAction={verifyOtp}>
+                <Button className="mt-4 px-4 bg-primaryPurple w-[100px]" onClick={verifyOtp}>
                   Submit
                 </Button>
               </div>
-            </form>
+            ) : (
+              <Button
+                className="mt-4 px-4 bg-primaryPurple w-[100px]"
+                onClick={() => {
+                  sendOtp();
+                  setOtpState(2);
+                }}
+              >
+                <a>Send OTP</a>
+              </Button>
+            )}
           </div>
         </div>
       </div>

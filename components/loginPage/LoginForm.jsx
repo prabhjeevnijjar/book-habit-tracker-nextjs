@@ -7,10 +7,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '@/components/ui/input-otp';
 import { Button } from '@/components/ui/button';
-import { verifyOtp } from '@/app/login/actions';
+import { sendOtp, verifyOtp } from '@/app/login/actions';
 
 const LoginForm = ({ setStep }) => {
   const [otpStep, setOtpStep] = useState(1);
+  const [state, setState] = useState({ name: '', username: '', email: '', otp: '' });
 
   return (
     <Fragment>
@@ -20,7 +21,6 @@ const LoginForm = ({ setStep }) => {
           <h1 className="text-white text-center font-semibold text-4xl">Log In</h1>
           <h4 className="text-white text-center">Track, Share, Engage</h4>
         </div>
-
         <div className="z-1 rounded-[1.5rem] top-[75%] h-[500px] absolute px-4 bg-white w-[100%] flex flex-col">
           <div className="flex align-center text-left py-4 items-center gap-2">
             <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={() => setStep(1)} className="cursor-pointer">
@@ -34,14 +34,14 @@ const LoginForm = ({ setStep }) => {
           </div>
           <div className="flex flex-col items-center">
             {otpStep === 2 ? (
-              <form action={verifyOtp}>
+              <Fragment>
                 <div className="grid w-full max-w-sm items-center gap-1.5 z-2 mt-2">
                   <Label htmlFor="email">Email</Label>
-                  <Input type="email" id="email" placeholder="Email" />
+                  <Input name="email" value={state.email || ''} type="email" id="email" placeholder="Email" />
                 </div>
                 <div className="grid w-full max-w-sm items-center gap-1.5 z-2 mt-4">
                   <Label htmlFor="otp2">OTP</Label>
-                  <InputOTP maxLength={6} name="otp2">
+                  <InputOTP maxLength={6} value={state.otp || ''} onChange={(value) => setState({ ...state, otp: value })}>
                     <InputOTPGroup>
                       <InputOTPSlot index={0} />
                       <InputOTPSlot index={1} />
@@ -55,20 +55,26 @@ const LoginForm = ({ setStep }) => {
                     </InputOTPGroup>
                   </InputOTP>
                 </div>
-                <Button className="mt-4 px-4 bg-primaryPurple w-[100px]" onClick={() => setOtpStep(1)}>
+                <Button className="mt-4 px-4 bg-primaryPurple w-[100px]" onClick={() => verifyOtp()}>
                   Login
                 </Button>
-              </form>
+              </Fragment>
             ) : (
-              <form>
+              <Fragment>
                 <div className="grid w-full max-w-sm items-center gap-1.5 z-2 mt-2">
                   <Label htmlFor="email">Email</Label>
                   <Input type="email" id="email" placeholder="Email" />
                 </div>
-                <Button className="mt-4 px-4 bg-primaryPurple w-[100px]" onClick={() => setOtpStep(2)}>
+                <Button
+                  className="mt-4 px-4 bg-primaryPurple w-[100px]"
+                  onClick={() => {
+                    setOtpStep(2);
+                    sendOtp();
+                  }}
+                >
                   Send OTP
                 </Button>
-              </form>
+              </Fragment>
             )}
           </div>
         </div>

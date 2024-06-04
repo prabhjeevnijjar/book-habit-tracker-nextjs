@@ -1,11 +1,11 @@
 'use client';
 
 import { Fragment } from 'react';
-import { signup } from '@/app/login/actions';
+import { sendOtp, verifyOtp } from '@/app/login/actions';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '@/components/ui/input-otp';
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { Button } from '@/components/ui/button';
 import bookshelfBg from '../../public/static/images/bg-bookshelf.png';
 
@@ -18,7 +18,6 @@ const SignupForm = ({ setStep }) => {
           <h1 className="text-white text-center font-semibold text-4xl">Sign Up</h1>
           <h4 className="text-white text-center">Track, Share, Engage</h4>
         </div>
-
         <div className="z-1 rounded-[1.5rem] top-[75%] h-[500px] absolute px-4 bg-white w-[100%] flex flex-col">
           <div className="flex align-center text-left ml-2 mt-3">
             <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={() => setStep(1)} className="cursor-pointer">
@@ -30,38 +29,45 @@ const SignupForm = ({ setStep }) => {
               ></path>
             </svg>
           </div>
-          <div className="flex flex-col items-center">
-            <form action={signup}>
-              <div className="grid w-full max-w-sm items-center gap-1.5 z-2 mt-12">
+          <div className="flex flex-col w-full max-w-md items-center gap-1.5 z-2 ">
+            <form className="grid w-full max-w-sm items-center gap-1.5 z-2 ">
+              <div className="grid w-full max-w-sm items-center gap-1.5 z-2 mt-3">
                 <Label htmlFor="name">Name</Label>
-                <Input name="name" type="text" id="name" placeholder="Name" />
+                <Input name="name" type="text" id="name" placeholder="Name" required />
               </div>
-              <div className="grid w-full max-w-sm items-center gap-1.5 z-2 mt-4">
+              <div className="grid w-full max-w-md items-center gap-1.5 z-2 mt-4">
                 <Label htmlFor="email">Email</Label>
-                <Input name="email" type="email" id="email" placeholder="Email" />
+                <Input name="email" type="email" id="email" placeholder="Email" required />
               </div>
               <div className="grid w-full max-w-sm items-center gap-1.5 z-2 mt-4">
                 <Label htmlFor="Username">Username</Label>
-                <Input name="username" type="text" id="Username" placeholder="Username" />
+                <Input name="username" type="text" id="Username" placeholder="Username" required />
               </div>
 
+              <Button className="mt-4 px-4 bg-primaryPurple w-[100px]" formAction={sendOtp}>
+                <a>Send OTP</a>
+              </Button>
+            </form>
+
+            <form className="grid w-full max-w-sm items-center gap-1.5 z-2">
               <div className="grid w-full max-w-sm items-center gap-1.5 z-2 mt-4">
-                <Label htmlFor="otpsignup">OTP</Label>
+                <Label htmlFor="otpsignup">OTP </Label>
                 <InputOTP maxLength={6} name="otpsignup">
                   <InputOTPGroup>
                     <InputOTPSlot index={0} />
                     <InputOTPSlot index={1} />
                     <InputOTPSlot index={2} />
                   </InputOTPGroup>
-                  <InputOTPSeparator />
                   <InputOTPGroup>
                     <InputOTPSlot index={3} />
                     <InputOTPSlot index={4} />
                     <InputOTPSlot index={5} />
                   </InputOTPGroup>
                 </InputOTP>
+                <Button className="mt-4 px-4 bg-primaryPurple w-[100px]" formAction={verifyOtp}>
+                  Submit
+                </Button>
               </div>
-              <Button className="mt-4 px-4 bg-primaryPurple w-[100px]">Join</Button>
             </form>
           </div>
         </div>
@@ -69,4 +75,5 @@ const SignupForm = ({ setStep }) => {
     </Fragment>
   );
 };
+
 export default SignupForm;

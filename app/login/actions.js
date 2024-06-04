@@ -5,17 +5,17 @@ import { redirect } from 'next/navigation';
 
 import { createClient } from '@/utils/supabase/server';
 
-export async function sendOtp(formData) {
-  console.log('i am here ::: ', formData);
+export async function sendOtp(state) {
+  console.log('sendOTP ::: ', state);
   try {
     const supabase = createClient();
 
     const { data, error } = await supabase.auth.signInWithOtp({
-      email: formData.get('email'),
+      email: state.email,
       options: {
         data: {
-          first_name: formData.get('name'),
-          user_name: formData.get('username'),
+          first_name: state.name,
+          user_name: state.username,
         },
         // set this to false if you do not want the user to be automatically signed up
         shouldCreateUser: true,
@@ -34,27 +34,30 @@ export async function sendOtp(formData) {
   }
 }
 
-export async function signup(formData) {
-  console.log('clicked::: ', formData);
+export async function signup(state) {
+  console.log('signup::: ', state);
   try {
     const supabase = createClient();
 
     const { data, error } = await supabase.auth.signInWithOtp({
-      email: formData.get('email'),
+      email: state.email,
       options: {
         data: {
-          first_name: formData.get('name'),
-          user_name: formData.get('username'),
+          first_name: state.name,
+          user_name: state.username,
         },
         // set this to false if you do not want the user to be automatically signed up
-        shouldCreateUser: false,
+        shouldCreateUser: true,
       },
     });
     console.log({ data });
-    if (error) throw error;
+    if (error) {
+      console.log({ error });
+      throw error;
+    }
 
-    revalidatePath('/', 'layout');
-    redirect('/');
+    // revalidatePath('/', 'layout');
+    // redirect('/');
   } catch (e) {
     console.log({ e });
     return {
@@ -63,14 +66,14 @@ export async function signup(formData) {
   }
 }
 
-export async function verifyOtp(formData) {
-  console.log('not herer');
+export async function verifyOtp(state) {
+  console.log('verify OTP');
   const supabase = createClient();
 
   const { data, error } = await supabase.auth.verifyOtp({
-    email: formData.get('email'),
+    email: state.email,
 
-    token: formData.get('otp'),
+    token: state.otp,
     type: 'email',
   });
 

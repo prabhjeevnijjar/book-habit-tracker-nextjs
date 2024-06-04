@@ -55,7 +55,7 @@ const LoginForm = ({ setStep }) => {
                     </InputOTPGroup>
                   </InputOTP>
                 </div>
-                <Button className="mt-4 px-4 bg-primaryPurple w-[100px]" onClick={() => verifyOtp()}>
+                <Button className="mt-4 px-4 bg-primaryPurple w-[100px]" onClick={() => verifyOtp(state)}>
                   Login
                 </Button>
               </Fragment>
@@ -69,7 +69,7 @@ const LoginForm = ({ setStep }) => {
                   className="mt-4 px-4 bg-primaryPurple w-[100px]"
                   onClick={() => {
                     setOtpStep(2);
-                    sendOtp();
+                    sendOtp(state);
                   }}
                 >
                   Send OTP

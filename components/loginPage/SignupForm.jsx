@@ -1,7 +1,7 @@
 'use client';
 
 import { Fragment, useState } from 'react';
-import { sendOtp, verifyOtp } from '@/app/login/actions';
+import { signup, verifyOtp } from '@/app/login/actions';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
@@ -60,7 +60,7 @@ const SignupForm = ({ setStep }) => {
                     <InputOTPSlot index={5} />
                   </InputOTPGroup>
                 </InputOTP>
-                <Button className="mt-4 px-4 bg-primaryPurple w-[100px]" onClick={verifyOtp}>
+                <Button className="mt-4 px-4 bg-primaryPurple w-[100px]" onClick={() => verifyOtp(state)}>
                   Submit
                 </Button>
               </div>
@@ -68,7 +68,7 @@ const SignupForm = ({ setStep }) => {
               <Button
                 className="mt-4 px-4 bg-primaryPurple w-[100px]"
                 onClick={() => {
-                  sendOtp();
+                  signup(state);
                   setOtpState(2);
                 }}
               >

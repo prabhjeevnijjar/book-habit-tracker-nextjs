@@ -12,7 +12,34 @@ import Image from 'next/image';
 
 const SignupForm = ({ setStep }) => {
   const [state, setState] = useState({ name: '', username: '', email: '', otp: '' });
+  const [errors, setErrors] = useState('');
   const [otpState, setOtpState] = useState(1);
+
+  const clientSubmit = () => {
+    const data = signup(state)
+      .then((dat) => {
+        console.log({ dat });
+        if (dat?.code !== 200) setErrors(dat.msg);
+        else setOtpState(2);
+      })
+      .catch((e) => {
+        console.log('signup::', { e });
+        setErrors('Something went wrong!');
+      });
+    console.log({ data });
+  };
+
+  const clientVerifyOtp = () => {
+    const data = verifyOtp(state)
+      .then((dat) => {
+        console.log({ dat });
+        if (dat.code !== 200) setErrors(dat.msg);
+      })
+      .catch((e) => {
+        setErrors('Something went wrong!');
+      });
+    console.log({ data });
+  };
   return (
     <Fragment>
       <div className="relative">
@@ -60,7 +87,7 @@ const SignupForm = ({ setStep }) => {
                     <InputOTPSlot index={5} />
                   </InputOTPGroup>
                 </InputOTP>
-                <Button className="mt-4 px-4 bg-primaryPurple w-[100px]" onClick={() => verifyOtp(state)}>
+                <Button className="mt-4 px-4 bg-primaryPurple w-[100px]" onClick={() => clientVerifyOtp()}>
                   Submit
                 </Button>
               </div>
@@ -68,13 +95,13 @@ const SignupForm = ({ setStep }) => {
               <Button
                 className="mt-4 px-4 bg-primaryPurple w-[100px]"
                 onClick={() => {
-                  signup(state);
-                  setOtpState(2);
+                  clientSubmit();
                 }}
               >
                 <a>Send OTP</a>
               </Button>
-            )}
+            )}{' '}
+            {errors && <p className="font-xs mt-3">*{errors}</p>}
           </div>
         </div>
       </div>

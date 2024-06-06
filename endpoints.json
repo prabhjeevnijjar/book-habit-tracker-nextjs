@@ -1,0 +1,4 @@
+{
+    "getTrendingBookFilters": "/lists/names.json",
+    "filteredTrendingBooks": "/lists/current"
+}

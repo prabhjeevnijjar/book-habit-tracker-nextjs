@@ -1,4 +1,4 @@
 {
-    "getTrendingBookFilters": "/lists/names.json",
-    "filteredTrendingBooks": "/lists/current"
+    "getTrendingBookWithFilter": "/lists/",
+    "getTopFiveOverview": "/lists/overview.json"
 }

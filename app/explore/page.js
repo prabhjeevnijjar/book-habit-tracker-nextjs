@@ -1,5 +1,4 @@
 import { Fragment } from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import TopNav from '@/components/layout/TopNav';
 import BottomNav from '@/components/layout/BottomNav';
 import TodaysSuggestions from '@/components/ExplorePage/TodaysSuggestions';
@@ -7,7 +6,7 @@ import API from '../../endpoints.json';
 
 const ExplorePage = async () => {
   const todaysData = await fetchTodays();
-  console.log(todaysData.books);
+
   return (
     <Fragment>
       <TopNav />
